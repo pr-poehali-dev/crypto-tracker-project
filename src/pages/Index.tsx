@@ -356,8 +356,11 @@ const Index = () => {
                     variant="ghost"
                     size="sm"
                     className="text-slate-400 hover:text-white"
+                    onClick={() => toggleFavorite(project.id)}
                   >
-                    <Star className="h-4 w-4" />
+                    <Star
+                      className={`h-4 w-4 ${favorites.includes(project.id) ? "fill-yellow-400 text-yellow-400" : ""}`}
+                    />
                   </Button>
                 </div>
                 <CardDescription className="text-slate-300">
@@ -418,6 +421,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         className="border-slate-600 text-slate-300 hover:text-white"
+                        onClick={() => openLink(project.links.website!)}
                       >
                         <ExternalLink className="h-3 w-3 mr-1" />
                         Сайт
@@ -428,6 +432,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         className="border-slate-600 text-slate-300 hover:text-white"
+                        onClick={() => openLink(project.links.discord!)}
                       >
                         Discord
                       </Button>
@@ -437,6 +442,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         className="border-slate-600 text-slate-300 hover:text-white"
+                        onClick={() => openLink(project.links.twitter!)}
                       >
                         Twitter
                       </Button>
@@ -444,7 +450,10 @@ const Index = () => {
                   </div>
 
                   {/* Action Button */}
-                  <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                  <Button
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                    onClick={() => startParticipation(project.id)}
+                  >
                     Начать участие
                   </Button>
                 </div>
