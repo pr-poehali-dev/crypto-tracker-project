@@ -7,6 +7,7 @@ import {
   Zap,
   Globe,
   Gift,
+  Heart,
 } from "lucide-react";
 import {
   Card,
@@ -18,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface Project {
   id: string;
@@ -191,6 +193,7 @@ const difficultyColors = {
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
   const filteredProjects = mockProjects.filter((project) => {
     const matchesCategory =
@@ -203,6 +206,40 @@ const Index = () => {
       );
     return matchesCategory && matchesSearch;
   });
+
+  const toggleFavorite = (projectId: string, projectName: string) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(projectId)) {
+      newFavorites.delete(projectId);
+      toast.success(`${projectName} удален из избранного`);
+    } else {
+      newFavorites.add(projectId);
+      toast.success(`${projectName} добавлен в избранное`);
+    }
+    setFavorites(newFavorites);
+  };
+
+  const openLink = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const startParticipation = (projectName: string) => {
+    toast.info(`Перенаправляем к участию в проекте ${projectName}...`);
+    // Здесь будет логика открытия детальной страницы
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case "active":
+        return "Активен";
+      case "upcoming":
+        return "Скоро";
+      case "ended":
+        return "Завершен";
+      default:
+        return status;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
